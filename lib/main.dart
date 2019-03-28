@@ -18,11 +18,14 @@ class RandomWordState extends State<RandomWords> {
   Widget build(BuildContext context) {
     final _suggestions = <WordPair>[];
     final _biggerFont = const TextStyle(fontSize: 18.0);
-    final wordPair = WordPair.random();
+    final Set<WordPair> _saved = new Set();
 
     Widget _buildRow(WordPair pair) {
+      final bool _alreadySaved = _saved.contains(pair);
       return ListTile(
         title: Text(pair.asPascalCase, style: _biggerFont),
+        trailing: new Icon(_alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: _alreadySaved ? Colors.red : null),
       );
     }
 
