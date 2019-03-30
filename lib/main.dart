@@ -47,7 +47,7 @@ class RandomWordState extends State<RandomWords> {
           return new Scaffold(
             appBar: new AppBar(title: const Text('Saved suggestion')),
             body: new ListView(children: divided)
-          )
+          );
         }
       )
     );
