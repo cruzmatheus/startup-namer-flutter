@@ -30,7 +30,11 @@ class NameBloc extends Bloc<NameEvent, NameState> {
   }
 
   Future<List<Name>> _fetchNames() async {
-    return List.generate(20, (int index) => Name(name: generateWordPairs().take(1).toString()));
+    List<Name> names = List();
+    generateWordPairs().take(20).forEach((name) {
+      names.add(Name(name: name.asPascalCase));
+    });
+    return names;
   }
 
 }
