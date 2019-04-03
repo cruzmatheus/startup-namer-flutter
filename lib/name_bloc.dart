@@ -2,11 +2,19 @@ import 'package:bloc/bloc.dart';
 
 import 'package:startup_namer_flutter/bloc/bloc.dart';
 import 'package:startup_namer_flutter/name.dart';
+import 'package:english_words/english_words.dart';
+import 'package:rxdart/rxdart.dart';
 
 class NameBloc extends Bloc<NameEvent, NameState> {
+  
   @override
-  // TODO: implement initialState
   NameState get initialState => NameUnitialized();
+
+  @override
+  Stream<NameEvent> transform(Stream<NameEvent> events) {
+    return (events as Observable<NameEvent>)
+        .debounce(Duration(milliseconds: 500));
+  }
 
   @override
   Stream<NameState> mapEventToState(NameEvent event) async* {
@@ -15,11 +23,15 @@ class NameBloc extends Bloc<NameEvent, NameState> {
         final names = await _fetchNames();
         yield NameLoaded(names: names);
       }
+      if (currentState is NameLoaded) {
+        final names = await _fetchNames();
+        yield NameLoaded(names: names);
+      }
     }
   }
 
   Future<List<Name>> _fetchNames() async {
-    return List.generate(10, (int index) => Name(name: "teste $index"));
+    return List.generate(20, (int index) => Name(name: generateWordPairs().take(1).toString()));
   }
 
 }

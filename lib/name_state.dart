@@ -11,12 +11,13 @@ class NameUnitialized extends NameState {
 
 class NameLoaded extends NameState {
   final List<Name> names;
+  final bool hasReachedMax;
 
-  NameLoaded({this.names}) : super([ names ]);
+  NameLoaded({this.names, this.hasReachedMax}) : super([ names, hasReachedMax ]);
 
-  NameLoaded copyWith({List<Name> names}) {
-    return NameLoaded(names: names ?? this.names);
+  NameLoaded copyWith({List<Name> names, bool hasReachedMax}) {
+    return NameLoaded(names: names ?? this.names, hasReachedMax: hasReachedMax ?? this.hasReachedMax);
   }
 
-  String toString() => "NameLoaded { names: ${names.length} }";
+  String toString() => "NameLoaded { names: ${names.length}, hasReachedMax: $hasReachedMax }";
 }

@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
         title: 'Startup Name Generator',
         theme: new ThemeData(primaryColor: Colors.red),
         home: Scaffold(
-          appBar: AppBar(title: Text('Startup Names Generator')),
-          body: HomePage()));
+            appBar: AppBar(title: Text('Startup Names Generator')),
+            body: HomePage()));
   }
 }
 
@@ -24,10 +24,25 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
   final NameBloc _nameBloc = NameBloc();
+  final _scrollThreshold = 200;
 
   _HomePageState() {
-    // _scrollController.addListener(onScroll());
+    _scrollController.addListener(_onScroll);
     _nameBloc.dispatch(Fetch());
+  }
+
+  @override
+  void dispose() {
+    _nameBloc.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      _nameBloc.dispatch(Fetch());
+    }
   }
 
   @override
@@ -40,31 +55,49 @@ class _HomePageState extends State<HomePage> {
         }
 
         if (state is NameLoaded) {
-          // return Center(child: Text("The state is $state"));
           return ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return NameWidget(name: state.names[index]);
-            },
-            itemCount: state.names.length
-          );
+              itemBuilder: (BuildContext context, int index) {
+                return index >= state.names.length
+                    ? BottomLoader()
+                    : NameWidget(name: state.names[index], index: index);
+              },
+              itemCount: state.names.length,
+              controller: _scrollController);
         }
       },
     );
   }
 }
 
+class BottomLoader extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Center(
+        child: SizedBox(
+          width: 33,
+          height: 33,
+          child: CircularProgressIndicator(
+            strokeWidth: 1.5,
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+
 class NameWidget extends StatelessWidget {
   final Name name;
+  final int index;
 
-  const NameWidget({Key key, @required this.name}) : super(key: key);
+  const NameWidget({Key key, @required this.name, @required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(
-        '1',
-        style: TextStyle(fontSize: 10.0),
-      ),
+      leading: Text('$index'),
       title: Text(name.name),
       dense: true,
     );
