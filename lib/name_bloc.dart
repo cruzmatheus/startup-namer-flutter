@@ -22,10 +22,9 @@ class NameBloc extends Bloc<NameEvent, NameState> {
       if (currentState is NameUnitialized) {
         final names = await _fetchNames();
         yield NameLoaded(names: names);
-      }
-      if (currentState is NameLoaded) {
+      } else if (currentState is NameLoaded) {
         final names = await _fetchNames();
-        yield NameLoaded(names: names);
+        yield NameLoaded(names: (currentState as NameLoaded).names + names);
       }
     }
   }

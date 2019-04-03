@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         if (state is NameLoaded) {
           return ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                return index >= state.names.length
+                return index >= state.names.length - 1
                     ? BottomLoader()
                     : NameWidget(name: state.names[index], index: index);
               },
@@ -97,7 +97,7 @@ class NameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text('$index'),
+      leading: Text('${index+1}'),
       title: Text(name.name),
       dense: true,
     );
