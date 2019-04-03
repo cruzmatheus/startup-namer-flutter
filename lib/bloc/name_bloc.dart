@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:startup_namer_flutter/bloc/bloc.dart';
-import 'package:startup_namer_flutter/name.dart';
+import 'package:startup_namer_flutter/model/name.dart';
 import 'package:english_words/english_words.dart';
 import 'package:rxdart/rxdart.dart';
 

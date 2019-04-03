@@ -1,3 +1,4 @@
-export 'package:startup_namer_flutter/name_event.dart';
-export 'package:startup_namer_flutter/name_state.dart';
-export 'package:startup_namer_flutter/name_bloc.dart';
+export './name_event.dart';
+export './name_state.dart';
+export './name_bloc.dart';
+export './simple_bloc_delegate.dart';
