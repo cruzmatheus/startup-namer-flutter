@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:startup_namer_flutter/bloc/bloc.dart';
+import 'package:startup_namer_flutter/widgets/tab_selector.dart';
 import 'model/name.dart';
 import './bloc/favorites/favorite.dart';
 import './bloc/tab/tab.dart';
@@ -78,6 +79,10 @@ class _HomePageState extends State<HomePage> {
             body: activeTab == AppTab.names
                 ? Center(child: Text("First tab"))
                 : Center(child: Text("Second tab")),
+            bottomNavigationBar: TabSelector(
+              activeTab: activeTab,
+              onTabSelected: (tab) => _tabBloc.dispatch(UpdateTab(tab))
+            ),
           ),
         );
       },
