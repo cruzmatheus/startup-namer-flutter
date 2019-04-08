@@ -9,6 +9,14 @@ class UpdateFavorites extends FavoriteEvent {
   List<Name> favoriteNames;
 
   UpdateFavorites(this.favoriteNames) : super([favoriteNames]);
-  
+
   toString() => 'UpdateFavorites';
+}
+
+class AddFavorite extends FavoriteEvent {
+  String name;
+
+  AddFavorite(this.name) : super(List.generate(1, (index) => name));
+
+  toString() => 'AddFavorite';
 }

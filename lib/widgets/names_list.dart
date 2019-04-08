@@ -28,6 +28,7 @@ class _NamesListState extends State<NamesList> {
 
   @override
   Widget build(BuildContext context) {
+    final FavoriteBloc _favoriteBloc = BlocProvider.of<FavoriteBloc>(context);
     return BlocBuilder(
       bloc: _nameBloc,
       builder: (BuildContext context, NameState state) {
@@ -40,7 +41,7 @@ class _NamesListState extends State<NamesList> {
               itemBuilder: (BuildContext context, int index) {
                 return index >= state.names.length - 1
                     ? BottomLoader()
-                    : NameWidget(name: state.names[index], index: index);
+                    : NameWidget(name: state.names[index], index: index, favoriteBloc: _favoriteBloc,);
               },
               itemCount: state.names.length,
               controller: _scrollController);
@@ -49,6 +50,12 @@ class _NamesListState extends State<NamesList> {
     );
   }
 
+  @override
+  void dispose() {
+    _nameBloc.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
 }
 
 class BottomLoader extends StatelessWidget {
@@ -72,8 +79,9 @@ class BottomLoader extends StatelessWidget {
 class NameWidget extends StatelessWidget {
   final Name name;
   final int index;
+  final FavoriteBloc favoriteBloc;
 
-  const NameWidget({Key key, @required this.name, @required this.index})
+  const NameWidget({Key key, @required this.name, @required this.index, @required this.favoriteBloc})
       : super(key: key);
 
   @override
@@ -81,7 +89,7 @@ class NameWidget extends StatelessWidget {
     return ListTile(
       leading: Text('${index + 1}'),
       title: Text(name.name),
-      dense: true,
+      trailing: IconButton(icon: Icon(Icons.favorite_border), color: Colors.red, onPressed: () => favoriteBloc.dispatch(AddFavorite(name.name))),
     );
   }
 }

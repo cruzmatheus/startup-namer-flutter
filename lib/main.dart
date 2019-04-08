@@ -35,7 +35,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TabBloc _tabBloc = TabBloc();
   FavoriteBloc _favoriteBloc;
-  
+
   @override
   void initState() {
     _favoriteBloc = FavoriteBloc(nameBloc: BlocProvider.of<NameBloc>(context));
@@ -61,11 +61,10 @@ class _HomePageState extends State<HomePage> {
           child: Scaffold(
             body: activeTab == AppTab.names
                 ? NamesList()
-                : Center(child: Text("Second tab")),
+                : Center(child: Text(_favoriteBloc.favoriteNames.elementAt(0))),
             bottomNavigationBar: TabSelector(
-              activeTab: activeTab,
-              onTabSelected: (tab) => _tabBloc.dispatch(UpdateTab(tab))
-            ),
+                activeTab: activeTab,
+                onTabSelected: (tab) => _tabBloc.dispatch(UpdateTab(tab))),
           ),
         );
       },
