@@ -7,6 +7,7 @@ import './bloc/favorites/favorite.dart';
 import './bloc/tab/tab.dart';
 import './model/app_tab.dart';
 import './widgets/names_list.dart';
+import './widgets/favorite_names_list.dart';
 
 void main() {
   BlocSupervisor().delegate = SimpleBlocDelegate();
@@ -38,7 +39,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _favoriteBloc = FavoriteBloc(nameBloc: BlocProvider.of<NameBloc>(context));
+//    _favoriteBloc = FavoriteBloc(nameBloc: BlocProvider.of<NameBloc>(context));
+    _favoriteBloc = FavoriteBloc();
     super.initState();
   }
 
@@ -61,7 +63,8 @@ class _HomePageState extends State<HomePage> {
           child: Scaffold(
             body: activeTab == AppTab.names
                 ? NamesList()
-                : Center(child: Text(_favoriteBloc.favoriteNames.elementAt(0))),
+                : FavoriteNamesList(),
+//                : Center(child: Text(_favoriteBloc.favoriteNames.elementAt(0))),
             bottomNavigationBar: TabSelector(
                 activeTab: activeTab,
                 onTabSelected: (tab) => _tabBloc.dispatch(UpdateTab(tab))),

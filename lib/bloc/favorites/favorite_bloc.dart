@@ -1,34 +1,33 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:startup_namer_flutter/bloc/favorites/favorite.dart';
-import '../names/names.dart';
 import 'package:startup_namer_flutter/model/name.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
-  final NameBloc nameBloc;
+//  final NameBloc nameBloc;
   StreamSubscription namesSubscription;
-  final Set<String> favoriteNames = Set();
 
-  FavoriteBloc({@required this.nameBloc}) {
-    namesSubscription = nameBloc.state.listen((state) {
-      if (state is NameLoaded) {
-        dispatch(UpdateFavorites((nameBloc.currentState as NameLoaded).names));
-      }
-    });
-  }
+//  FavoriteBloc({@required this.nameBloc}) {
+//    namesSubscription = nameBloc.state.listen((state) {
+//      if (state is NameLoaded) {
+//        dispatch(UpdateFavorites((nameBloc.currentState as NameLoaded).names));
+//      }
+//    });
+//  }
 
   @override
-  FavoriteState get initialState => nameBloc.currentState is NameLoaded 
-                                  ? FavoriteState((nameBloc.currentState as NameLoaded).names)
-                                  : FavoriteState([]);
+  FavoriteState get initialState => FavoriteEmptyState();
+//nameBloc.currentState is NameLoaded
+//                                  ? FavoriteState((nameBloc.currentState as NameLoaded).names)
+//                                  : FavoriteState([]);
 
   @override
   Stream<FavoriteState> mapEventToState(FavoriteEvent event) async* {
-    if (event is UpdateFavorites) {
-      yield FavoriteState((nameBloc as NameLoaded).names);
-    } else if (event is AddFavorite) {
+//    if (event is UpdateFavorites) {
+//      yield FavoriteState((nameBloc as NameLoaded).names);
+//    } else
+    if (event is AddFavorite) {
       List<Name> fav = [ Name(name: event.name) ];
       yield FavoriteState(currentState.favoriteNames + fav);
     }
@@ -37,7 +36,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
   @override
   void dispose() {
-    namesSubscription.cancel();
+//    namesSubscription.cancel();
     super.dispose();
   }
   

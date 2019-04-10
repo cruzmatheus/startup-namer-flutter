@@ -8,3 +8,20 @@ class FavoriteState extends Equatable {
 
   String toString() => 'FavoriteState { favoriteNames: $favoriteNames }';
 }
+
+class FavoriteEmptyState extends FavoriteState {
+
+  FavoriteEmptyState() : super([]);
+
+  String toString() => 'FavoriteEmptyState { favoriteNames: [] }';
+
+}
+
+class FavoriteAdded extends FavoriteState {
+  final List<Name> favoriteNames;
+
+  FavoriteAdded({this.favoriteNames}) : super(favoriteNames);
+
+  String toString() => "FavoriteAdded: { favoriteNames: $favoriteNames } ";
+
+}
