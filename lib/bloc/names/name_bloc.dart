@@ -26,6 +26,11 @@ class NameBloc extends Bloc<NameEvent, NameState> {
         final names = await _fetchNames();
         yield NameLoaded(names: (currentState as NameLoaded).names + names);
       }
+    } else if (event is Favorite) {
+      var namesList = List<Name>.from((currentState as NameLoaded).names);
+      int nameIndex = namesList.indexOf(event.name);
+      namesList[nameIndex] = Name(name: event.name.name, isFavorite: true);
+      yield NameLoaded(names: namesList);
     }
   }
 

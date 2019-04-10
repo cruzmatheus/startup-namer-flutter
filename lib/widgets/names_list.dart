@@ -41,7 +41,7 @@ class _NamesListState extends State<NamesList> {
               itemBuilder: (BuildContext context, int index) {
                 return index >= state.names.length - 1
                     ? BottomLoader()
-                    : NameWidget(name: state.names[index], index: index, favoriteBloc: _favoriteBloc,);
+                    : NameWidget(name: state.names[index], index: index, favoriteBloc: _favoriteBloc, nameBloc: _nameBloc);
               },
               itemCount: state.names.length,
               controller: _scrollController);
@@ -80,8 +80,9 @@ class NameWidget extends StatelessWidget {
   final Name name;
   final int index;
   final FavoriteBloc favoriteBloc;
+  final NameBloc nameBloc;
 
-  const NameWidget({Key key, @required this.name, @required this.index, @required this.favoriteBloc})
+  const NameWidget({Key key, @required this.name, @required this.index, @required this.favoriteBloc, this.nameBloc})
       : super(key: key);
 
   @override
@@ -89,7 +90,15 @@ class NameWidget extends StatelessWidget {
     return ListTile(
       leading: Text('${index + 1}'),
       title: Text(name.name),
-      trailing: IconButton(icon: Icon(Icons.favorite_border), color: Colors.red, onPressed: () => favoriteBloc.dispatch(AddFavorite(name.name))),
+      trailing: IconButton(
+          icon: name.isFavorite
+              ? Icon(Icons.favorite)
+              : Icon(Icons.favorite_border), color: Colors.red, onPressed: () => _changeStatus()),
     );
+  }
+
+  void _changeStatus() {
+    favoriteBloc.dispatch(AddFavorite(name.name));
+    nameBloc.dispatch(Favorite(name));
   }
 }

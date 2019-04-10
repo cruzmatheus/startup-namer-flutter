@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 class TabBloc extends Bloc<TabEvent, AppTab> {
    final FavoriteBloc favoriteBloc;
 
-  TabBloc({@required this.favoriteBloc}) { }
+  TabBloc({@required this.favoriteBloc});
 
   @override
   get initialState => AppTab.names;
