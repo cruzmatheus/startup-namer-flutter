@@ -20,3 +20,11 @@ class AddFavorite extends FavoriteEvent {
 
   toString() => 'AddFavorite';
 }
+
+class LoadFavorite extends FavoriteEvent {
+
+  LoadFavorite() : super([]);
+
+  toString() => 'LoadFavorite';
+
+}

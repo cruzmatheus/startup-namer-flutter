@@ -34,13 +34,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TabBloc _tabBloc = TabBloc();
   FavoriteBloc _favoriteBloc;
+  TabBloc _tabBloc;
 
   @override
   void initState() {
-//    _favoriteBloc = FavoriteBloc(nameBloc: BlocProvider.of<NameBloc>(context));
     _favoriteBloc = FavoriteBloc();
+    _tabBloc = new TabBloc(favoriteBloc: _favoriteBloc);
+//    _favoriteBloc = FavoriteBloc(nameBloc: BlocProvider.of<NameBloc>(context));
     super.initState();
   }
 

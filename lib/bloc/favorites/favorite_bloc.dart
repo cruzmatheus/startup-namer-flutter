@@ -29,7 +29,9 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 //    } else
     if (event is AddFavorite) {
       List<Name> fav = [ Name(name: event.name) ];
-      yield FavoriteState(currentState.favoriteNames + fav);
+      yield FavoriteAdded(favoriteNames: currentState.favoriteNames + fav);
+    } else if (event is LoadFavorite) {
+      yield FavoriteLoaded(favoriteNames: currentState.favoriteNames);
     }
 
   }

@@ -25,3 +25,12 @@ class FavoriteAdded extends FavoriteState {
   String toString() => "FavoriteAdded: { favoriteNames: $favoriteNames } ";
 
 }
+
+class FavoriteLoaded extends FavoriteState {
+  final List<Name> favoriteNames;
+
+  FavoriteLoaded({this.favoriteNames}) : super(favoriteNames);
+
+  String toString() => "FavoriteLoaded: { favoriteNames: $favoriteNames } ";
+
+}
