@@ -22,7 +22,7 @@ class FavoriteAdded extends FavoriteState {
 
   FavoriteAdded({this.favoriteNames}) : super(favoriteNames);
 
-  String toString() => "FavoriteAdded: { favoriteNames: $favoriteNames } ";
+  String toString() => "FavoriteAdded: { favoriteNames: ${favoriteNames.length} } ";
 
 }
 
@@ -31,6 +31,6 @@ class FavoriteLoaded extends FavoriteState {
 
   FavoriteLoaded({this.favoriteNames}) : super(favoriteNames);
 
-  String toString() => "FavoriteLoaded: { favoriteNames: $favoriteNames } ";
+  String toString() => "FavoriteLoaded: { favoriteNames: ${favoriteNames.length} } ";
 
 }

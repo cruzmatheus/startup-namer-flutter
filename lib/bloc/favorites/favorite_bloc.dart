@@ -21,7 +21,6 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
   @override
   void dispose() {
-//    namesSubscription.cancel();
     super.dispose();
   }
   

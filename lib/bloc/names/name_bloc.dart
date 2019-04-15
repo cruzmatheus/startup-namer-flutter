@@ -1,20 +1,12 @@
 import 'package:bloc/bloc.dart';
-
+import 'package:english_words/english_words.dart';
 import 'package:startup_namer_flutter/bloc/bloc.dart';
 import 'package:startup_namer_flutter/model/name.dart';
-import 'package:english_words/english_words.dart';
-import 'package:rxdart/rxdart.dart';
 
 class NameBloc extends Bloc<NameEvent, NameState> {
   
   @override
   NameState get initialState => NameUnitialized();
-
-  @override
-  Stream<NameEvent> transform(Stream<NameEvent> events) {
-    return (events as Observable<NameEvent>)
-        .debounce(Duration(milliseconds: 500));
-  }
 
   @override
   Stream<NameState> mapEventToState(NameEvent event) async* {
@@ -30,6 +22,7 @@ class NameBloc extends Bloc<NameEvent, NameState> {
       var namesList = List<Name>.from((currentState as NameLoaded).names);
       int nameIndex = namesList.indexOf(event.name);
       namesList[nameIndex] = Name(name: event.name.name, isFavorite: true);
+
       yield NameLoaded(names: namesList);
     }
   }
